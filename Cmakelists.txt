@@ -1,0 +1,34 @@
+cmake_minimum_required(VERSION 3.10)
+project(learning-vulkan)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_STANDARD 17)
+
+
+# Find packages
+find_package(Vulkan REQUIRED)
+# GLFW
+set(GLFW_DIR ${CMAKE_SOURCE_DIR}/libs/glfw)
+
+set(GLFW3_INCLUDE_DIRS ${GLFW_DIR}/include)
+set(GLFW3_LIBRARY_DIRS ${GLFW_DIR}/lib)
+
+# Find the library file
+find_library(GLFW3_LIBRARY 
+    NAMES glfw3_mt glfw3dll glfw3
+    PATHS ${GLFW3_LIBRARY_DIRS}
+    REQUIRED
+)
+
+# Create imported target
+add_library(glfw INTERFACE)
+target_include_directories(glfw INTERFACE ${GLFW3_INCLUDE_DIRS})
+target_link_libraries(glfw INTERFACE ${GLFW3_LIBRARY})
+
+
+add_executable(${PROJECT_NAME} src/main.cpp)
+target_include_directories(${PROJECT_NAME} PRIVATE ${GLFW3_INCLUDE_DIRS})
+target_link_libraries(${PROJECT_NAME} PRIVATE 
+    ${GLFW3_LIBRARY}
+    Vulkan::Vulkan
+)

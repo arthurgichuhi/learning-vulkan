@@ -1,0 +1,9 @@
+[
+{
+  "directory": "C:/Users/ADMIN/graphics-projects/learning-vulkan/build",
+  "command": "C:\\PROGRA~1\\MIB055~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -IC:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\libs\\glfw\\include -external:IC:\\VulkanSDK\\1.4.341.1\\Include -external:W0 /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17 /FoCMakeFiles\\learning-vulkan.dir\\src\\main.cpp.obj /FdCMakeFiles\\learning-vulkan.dir\\ /FS -c C:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\src\\main.cpp",
+  "file": "C:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\src\\main.cpp",
+  "output": "CMakeFiles\\learning-vulkan.dir\\src\\main.cpp.obj",
+  "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
+}
+]
