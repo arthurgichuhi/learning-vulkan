@@ -5,7 +5,10 @@ namespace engine {
 	Engine::Engine(){
 		build_glfw_window();
 		make_instance();
-		make_debug_messenger();
+		if (debugMode) {
+			debugMessenger = vkInit::make_debug_messenger(instance, dldi);
+		}
+		make_device();
 	}
 
 	Engine::~Engine() {
@@ -41,7 +44,7 @@ namespace engine {
 		dldi = vk::detail::DispatchLoaderDynamic(instance, vkGetInstanceProcAddr);
 	}
 
-	void Engine::make_debug_messenger() {
-		debugMessenger = vkInit::make_debug_messenger(instance,dldi);
+	void Engine::make_device() {
+		device = vkInit::choose_physical_device(instance, debugMode);
 	}
 }

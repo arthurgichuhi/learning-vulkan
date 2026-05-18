@@ -3,6 +3,7 @@
 #include "../EngineConfig.h"
 #include "../EngineInstance.h"
 #include "../logging.h"
+#include "../device.h"
 
 namespace engine {
 	class Engine {
@@ -21,15 +22,15 @@ namespace engine {
 
 		GLFWwindow* window{ nullptr };
 		vk::Instance instance{ nullptr };
-
 		vk::DebugUtilsMessengerEXT debugMessenger{ nullptr };
-
 		vk::detail::DispatchLoaderDynamic dldi;
+
+		vk::PhysicalDevice device{ nullptr };
 
 		void build_glfw_window();
 
 		void make_instance();
 
-		void make_debug_messenger();
+		void make_device();
 	};
 }
