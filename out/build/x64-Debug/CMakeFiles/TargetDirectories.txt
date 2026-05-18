@@ -1,0 +1,3 @@
+C:/Users/ADMIN/graphics-projects/learning-vulkan/out/build/x64-Debug/CMakeFiles/learning-vulkan.dir
+C:/Users/ADMIN/graphics-projects/learning-vulkan/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+C:/Users/ADMIN/graphics-projects/learning-vulkan/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir

@@ -1,20 +1,11 @@
 #include <GLFW/glfw3.h>
-#include <vulkan/vulkan.hpp>
 #include <iostream>
+#include "core/engine.h"
 
 int main() {
-    std::cout << "Hello Vulkan with GLFW!" << std::endl;
+    engine::Engine* engine = new engine::Engine();
 
-    // Initialize GLFW
-    if (!glfwInit()) {
-        std::cerr << "Failed to initialize GLFW" << std::endl;
-        return -1;
-    }
-    
-    std::cout << "GLFW initialized successfully!" << std::endl;
-    
-    // Cleanup
-    glfwTerminate();
+    delete engine;
     
     return 0;
 }

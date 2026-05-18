@@ -26,7 +26,10 @@ target_include_directories(glfw INTERFACE ${GLFW3_INCLUDE_DIRS})
 target_link_libraries(glfw INTERFACE ${GLFW3_LIBRARY})
 
 
-add_executable(${PROJECT_NAME} src/main.cpp)
+add_executable(${PROJECT_NAME} 
+src/main.cpp
+src/core/engine.cpp
+src/logging.cpp)
 target_include_directories(${PROJECT_NAME} PRIVATE ${GLFW3_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} PRIVATE 
     ${GLFW3_LIBRARY}
