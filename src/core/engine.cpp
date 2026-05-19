@@ -46,5 +46,6 @@ namespace engine {
 
 	void Engine::make_device() {
 		device = vkInit::choose_physical_device(instance, debugMode);
+		vkInit::findQueueFamilies(device, debugMode);
 	}
 }

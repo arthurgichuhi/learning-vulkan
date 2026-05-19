@@ -37,3 +37,17 @@
 38	6141	8008269706405869	CMakeFiles/learning-vulkan.dir/src/main.cpp.obj	5bbf9601ab7642cd
 46	6386	8008269706480281	CMakeFiles/learning-vulkan.dir/src/core/engine.cpp.obj	bae6931afea75cb3
 6386	6741	8008269769876483	learning-vulkan.exe	7aca91edbe37300f
+132	7923	8008729105357949	CMakeFiles/learning-vulkan.dir/src/logging.cpp.obj	a237482beb5b5be3
+109	7956	8008729105137875	CMakeFiles/learning-vulkan.dir/src/main.cpp.obj	5bbf9601ab7642cd
+121	8027	8008729105267963	CMakeFiles/learning-vulkan.dir/src/core/engine.cpp.obj	bae6931afea75cb3
+40	6589	8008731239959601	CMakeFiles/learning-vulkan.dir/src/main.cpp.obj	5bbf9601ab7642cd
+50	6791	8008731240069637	CMakeFiles/learning-vulkan.dir/src/core/engine.cpp.obj	bae6931afea75cb3
+6792	7222	8008731307475340	learning-vulkan.exe	7aca91edbe37300f
+18	6771	8008912337713583	CMakeFiles/learning-vulkan.dir/src/main.cpp.obj	5bbf9601ab7642cd
+28	7134	8008912337813528	CMakeFiles/learning-vulkan.dir/src/core/engine.cpp.obj	bae6931afea75cb3
+7135	7617	8008912408869694	learning-vulkan.exe	7aca91edbe37300f
+15	5924	8008913682777585	CMakeFiles/learning-vulkan.dir/src/core/engine.cpp.obj	bae6931afea75cb3
+5926	6340	8008913741882118	learning-vulkan.exe	7aca91edbe37300f
+33	5776	8008914000595469	CMakeFiles/learning-vulkan.dir/src/main.cpp.obj	5bbf9601ab7642cd
+44	5999	8008914000705482	CMakeFiles/learning-vulkan.dir/src/core/engine.cpp.obj	bae6931afea75cb3
+6000	6415	8008914060269155	learning-vulkan.exe	7aca91edbe37300f
