@@ -3,3 +3,16 @@
 37	6090	8011320566368091	CMakeFiles/learning-vulkan.dir/src/main.cpp.obj	62bd61ad135f1d93
 46	6166	8011320566368091	CMakeFiles/learning-vulkan.dir/src/core/engine.cpp.obj	c2b5236ed4a4248f
 6166	6502	8011320627567323	learning-vulkan.exe	95023d2c539196b9
+49	8180	8011367823753865	CMakeFiles/learning-vulkan.dir/src/logging.cpp.obj	d3e09e1daf0b84d
+38	8673	8011367823653843	CMakeFiles/learning-vulkan.dir/src/core/engine.cpp.obj	c2b5236ed4a4248f
+29	8795	8011367823553791	CMakeFiles/learning-vulkan.dir/src/main.cpp.obj	62bd61ad135f1d93
+8796	9247	8011367911216545	learning-vulkan.exe	95023d2c539196b9
+53	6787	8011372120850569	CMakeFiles/learning-vulkan.dir/src/main.cpp.obj	62bd61ad135f1d93
+73	6942	8011372121033152	CMakeFiles/learning-vulkan.dir/src/core/engine.cpp.obj	c2b5236ed4a4248f
+6943	7320	8011372189733220	learning-vulkan.exe	95023d2c539196b9
+34	5940	8011372488331335	CMakeFiles/learning-vulkan.dir/src/main.cpp.obj	62bd61ad135f1d93
+43	6119	8011372488417672	CMakeFiles/learning-vulkan.dir/src/core/engine.cpp.obj	c2b5236ed4a4248f
+6120	6391	8011372549190227	learning-vulkan.exe	95023d2c539196b9
+32	6151	8011378107599490	CMakeFiles/learning-vulkan.dir/src/main.cpp.obj	62bd61ad135f1d93
+39	6235	8011378107697846	CMakeFiles/learning-vulkan.dir/src/core/engine.cpp.obj	c2b5236ed4a4248f
+6235	6605	8011378169651008	learning-vulkan.exe	95023d2c539196b9

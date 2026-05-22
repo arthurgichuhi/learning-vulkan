@@ -1,5 +1,4 @@
 #pragma once
-#include <GLFW/glfw3.h>
 #include "../EngineConfig.h"
 #include "../EngineInstance.h"
 #include "../logging.h"
@@ -23,10 +22,12 @@ private:
 	vk::Instance instance{ nullptr };
 	vk::DebugUtilsMessengerEXT debugMessenger{ nullptr };
 	vk::detail::DispatchLoaderDynamic dldi;
+	vk::SurfaceKHR surface;
 
 	vk::PhysicalDevice physicalDevice{ nullptr };
 	vk::Device device{ nullptr };
 	vk::Queue graphicsQueue{ nullptr };
+	vk::Queue presentQueue{ nullptr };
 
 	void build_glfw_window();
 

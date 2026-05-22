@@ -204,7 +204,7 @@ namespace vkInit {
 
 	}
 
-	inline QueueFamilyIndices findQueueFamilies(vk::PhysicalDevice device, bool debug) {
+	inline QueueFamilyIndices findQueueFamilies(vk::PhysicalDevice device, vk::SurfaceKHR surface, bool debug) {
 		QueueFamilyIndices indices;
 
 		std::vector<vk::QueueFamilyProperties> queueFamilies = device.getQueueFamilyProperties();
@@ -250,10 +250,16 @@ namespace vkInit {
 
 			if (queueFamily.queueFlags & vk::QueueFlagBits::eGraphics) {
 				indices.graphicsFamily = i;
-				indices.presentFamily = i;
 
 				if (debug) {
 					std::cout << "Queue Family " << i << " is suitable for graphics and presenting";
+				}
+			}
+
+			if (device.getSurfaceSupportKHR(i, surface)) {
+				indices.presentFamily = i;
+				if (debug) {
+					std::cout << "\nPresent Family " << i << " is suitable for graphics and presenting\n";
 				}
 			}
 
@@ -267,8 +273,15 @@ namespace vkInit {
 		return indices;
 	}
 
-	inline vk::Device create_logical_device(vk::PhysicalDevice& physicalDevice, bool& debug) {
-		QueueFamilyIndices indices = findQueueFamilies(physicalDevice, debug);
+	inline vk::Device create_logical_device(vk::PhysicalDevice& physicalDevice,vk::SurfaceKHR surface, bool& debug) {
+		QueueFamilyIndices indices = findQueueFamilies(physicalDevice, surface, debug);
+
+		std::vector<uint32_t>uniqueIndices;
+		uniqueIndices.push_back(indices.graphicsFamily.value());
+		if (indices.graphicsFamily.value() != indices.presentFamily.value()) {
+			uniqueIndices.push_back(indices.presentFamily.value());
+		}
+
 		float queuePriority = 1.0f;
 		/*
 		* VULKAN_HPP_CONSTEXPR DeviceQueueCreateInfo( VULKAN_HPP_NAMESPACE::DeviceQueueCreateFlags flags_            = {},
@@ -276,10 +289,14 @@ namespace vkInit {
 												uint32_t                                     queueCount_       = {},
 												const float * pQueuePriorities_ = {} ) VULKAN_HPP_NOEXCEPT
 		*/
-		vk::DeviceQueueCreateInfo queueCreateInfo = vk::DeviceQueueCreateInfo(
-			vk::DeviceQueueCreateFlags(), indices.graphicsFamily.value(),
-			1, &queuePriority
-		);
+		std::vector<vk::DeviceQueueCreateInfo> queueCreateInfo;
+
+		for (uint32_t queueFamilyIndex : uniqueIndices) {
+			queueCreateInfo.push_back(vk::DeviceQueueCreateInfo(
+				vk::DeviceQueueCreateFlags(), indices.graphicsFamily.value(),
+				1, &queuePriority
+			));
+		}
 
 		/*
 		* Device features must be requested before the device is abstracted,
@@ -306,7 +323,7 @@ namespace vkInit {
 		}
 
 		vk::DeviceCreateInfo deviceCreateInfo = vk::DeviceCreateInfo(
-			vk::DeviceCreateFlags(), 1, &queueCreateInfo,
+			vk::DeviceCreateFlags(), queueCreateInfo.size(), queueCreateInfo.data(),
 			enabledLayers.size(), enabledLayers.data(),
 			0, nullptr,
 			&deviceFeatures
@@ -327,9 +344,12 @@ namespace vkInit {
 		}
 	}
 
-	inline vk::Queue get_queue(vk::PhysicalDevice physicalDevice,vk::Device device, bool debug) {
-		QueueFamilyIndices indices = findQueueFamilies(physicalDevice, debug);
+	inline std::array< vk::Queue,2> get_queue(vk::PhysicalDevice physicalDevice,vk::Device device, vk::SurfaceKHR surface, bool debug) {
+		QueueFamilyIndices indices = findQueueFamilies(physicalDevice, surface, debug);
 
-		return device.getQueue(indices.graphicsFamily.value(), 0);
+		return {
+			device.getQueue(indices.graphicsFamily.value(), 0),
+			device.getQueue(indices.presentFamily.value(), 0)
+		};
 	}
 }
