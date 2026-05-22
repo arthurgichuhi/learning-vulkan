@@ -1,3 +1,5 @@
-# ninja log v6
-18	1189	8005413121196310	CMakeFiles/learning-vulkan.dir/src/main.cpp.obj	5bbf9601ab7642cd
-1191	1636	8005413132925917	learning-vulkan.exe	3c021b4e7cddf6ae
+# ninja log v7
+45	11029	8011248721636787	CMakeFiles/learning-vulkan.dir/src/logging.cpp.obj	90cc6cfa27365e32
+57	10209	8011250190101978	CMakeFiles/learning-vulkan.dir/src/main.cpp.obj	24e711cdd9338b6e
+69	10542	8011250190258487	CMakeFiles/learning-vulkan.dir/src/core/engine.cpp.obj	6a97a8a1055469b1
+10545	11504	8011250295015565	learning-vulkan.exe	4a77edcb432ff716

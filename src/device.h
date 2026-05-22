@@ -266,4 +266,70 @@ namespace vkInit {
 
 		return indices;
 	}
+
+	inline vk::Device create_logical_device(vk::PhysicalDevice& physicalDevice, bool& debug) {
+		QueueFamilyIndices indices = findQueueFamilies(physicalDevice, debug);
+		float queuePriority = 1.0f;
+		/*
+		* VULKAN_HPP_CONSTEXPR DeviceQueueCreateInfo( VULKAN_HPP_NAMESPACE::DeviceQueueCreateFlags flags_            = {},
+												uint32_t                                     queueFamilyIndex_ = {},
+												uint32_t                                     queueCount_       = {},
+												const float * pQueuePriorities_ = {} ) VULKAN_HPP_NOEXCEPT
+		*/
+		vk::DeviceQueueCreateInfo queueCreateInfo = vk::DeviceQueueCreateInfo(
+			vk::DeviceQueueCreateFlags(), indices.graphicsFamily.value(),
+			1, &queuePriority
+		);
+
+		/*
+		* Device features must be requested before the device is abstracted,
+		* therefore we only pay for what we need.
+		*/
+
+		vk::PhysicalDeviceFeatures deviceFeatures = vk::PhysicalDeviceFeatures();
+
+		/*
+		* VULKAN_HPP_CONSTEXPR DeviceCreateInfo( VULKAN_HPP_NAMESPACE::DeviceCreateFlags flags_                         = {},
+										   uint32_t                                queueCreateInfoCount_          = {},
+										   const VULKAN_HPP_NAMESPACE::DeviceQueueCreateInfo * pQueueCreateInfos_ = {},
+										   uint32_t                                            enabledLayerCount_ = {},
+										   const char * const * ppEnabledLayerNames_                              = {},
+										   uint32_t             enabledExtensionCount_                            = {},
+										   const char * const * ppEnabledExtensionNames_                          = {},
+										   const VULKAN_HPP_NAMESPACE::PhysicalDeviceFeatures * pEnabledFeatures_ = {} )
+		*/
+
+		std::vector<char*> enabledLayers;
+
+		if (debug) {
+			enabledLayers.push_back("VK_LAYER_KHRONOS_validation");
+		}
+
+		vk::DeviceCreateInfo deviceCreateInfo = vk::DeviceCreateInfo(
+			vk::DeviceCreateFlags(), 1, &queueCreateInfo,
+			enabledLayers.size(), enabledLayers.data(),
+			0, nullptr,
+			&deviceFeatures
+		);
+
+		try {
+
+			vk::Device device = physicalDevice.createDevice(deviceCreateInfo);
+			if (debug) {
+				std::cout << "\n" << "Device Succesfully Abstracted" << "\n";
+			}
+		}
+		catch (vk::SystemError error) {
+			if (debug) {
+				std::cout << "\n" << "Device Abstraction Failed" << "\n";
+				return nullptr;
+			}
+		}
+	}
+
+	inline vk::Queue get_queue(vk::PhysicalDevice physicalDevice,vk::Device device, bool debug) {
+		QueueFamilyIndices indices = findQueueFamilies(physicalDevice, debug);
+
+		return device.getQueue(indices.graphicsFamily.value(), 0);
+	}
 }

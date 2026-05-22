@@ -3,7 +3,8 @@
 #include "core/engine.h"
 
 int main() {
-    engine::Engine* engine = new engine::Engine();
+
+    Engine* engine = new Engine();
 
     delete engine;
     

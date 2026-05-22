@@ -30,6 +30,8 @@ namespace vkInit {
 				}
 				return false;
 			}
+
+			return true;
 		}
 
 		//check layer support
@@ -97,7 +99,7 @@ namespace vkInit {
             }
         }
         if (!supported(extensions, layers, debug)) {
-            return VK_NULL_HANDLE;
+            return nullptr;
         }
 
         // Add validation layers if in debug mode
@@ -113,7 +115,7 @@ namespace vkInit {
         }
         catch (const vk::SystemError& e) {
             std::cerr << "Failed to create Vulkan instance: \n" << e.what() << std::endl;
-            return VK_NULL_HANDLE;
+            return nullptr;
         }
 	}
 }

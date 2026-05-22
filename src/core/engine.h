@@ -5,32 +5,32 @@
 #include "../logging.h"
 #include "../device.h"
 
-namespace engine {
-	class Engine {
-	public:
-		Engine();
-		~Engine();
+class Engine {
+public:
+	Engine();
+	~Engine();
 
-	private:
+private:
 
-		bool debugMode = true;
+	bool debugMode = true;
 
-		int width{ 640 };
-		int height{ 480 };
+	int width{ 640 };
+	int height{ 480 };
 
-		std::string name{};
+	std::string name{};
 
-		GLFWwindow* window{ nullptr };
-		vk::Instance instance{ nullptr };
-		vk::DebugUtilsMessengerEXT debugMessenger{ nullptr };
-		vk::detail::DispatchLoaderDynamic dldi;
+	GLFWwindow* window{ nullptr };
+	vk::Instance instance{ nullptr };
+	vk::DebugUtilsMessengerEXT debugMessenger{ nullptr };
+	vk::detail::DispatchLoaderDynamic dldi;
 
-		vk::PhysicalDevice device{ nullptr };
+	vk::PhysicalDevice physicalDevice{ nullptr };
+	vk::Device device{ nullptr };
+	vk::Queue graphicsQueue{ nullptr };
 
-		void build_glfw_window();
+	void build_glfw_window();
 
-		void make_instance();
+	void make_instance();
 
-		void make_device();
-	};
-}
+	void make_device();
+};
