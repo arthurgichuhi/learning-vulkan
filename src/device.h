@@ -1,5 +1,6 @@
 #pragma once
 #include "EngineConfig.h"
+#include "queue_families.h"
 
 
 /*
@@ -15,28 +16,6 @@
 
 
 namespace vkInit {
-
-	struct QueueFamilyIndices {
-		std::optional< uint32_t> graphicsFamily;
-		std::optional< uint32_t> presentFamily;
-
-		bool isComplete() {
-			return graphicsFamily.has_value() && presentFamily.has_value();
-		}
-	};
-
-	struct SwapChainSupportDetails {
-		vk::SurfaceCapabilitiesKHR capabilities;
-		std::vector<vk::SurfaceFormatKHR> formats;
-		std::vector<vk::PresentModeKHR> presentModes;
-	};
-
-	struct SwapChainBundle {
-		vk::SwapchainKHR swapChain;
-		std::vector<vk::Image> images;
-		vk::Format format;
-		vk::Extent2D extent;
-	};
 
 	inline void log_device_properties(const vk::PhysicalDevice& device) {
 		/*
@@ -217,79 +196,12 @@ namespace vkInit {
 
 	}
 
-	inline QueueFamilyIndices findQueueFamilies(vk::PhysicalDevice device, vk::SurfaceKHR surface, bool debug) {
-		QueueFamilyIndices indices;
 
-		std::vector<vk::QueueFamilyProperties> queueFamilies = device.getQueueFamilyProperties();
-
-		if (debug) {
-			std::cout << "System can support " << queueFamilies.size() << " queue families \n";
-		}
-
-		int i = 0;
-		for (vk::QueueFamilyProperties queueFamily : queueFamilies) {
-
-			/*
-			* // Provided by VK_VERSION_1_0
-				typedef struct VkQueueFamilyProperties {
-				VkQueueFlags    queueFlags;
-				uint32_t        queueCount;
-				uint32_t        timestampValidBits;
-				VkExtent3D      minImageTransferGranularity;
-				} VkQueueFamilyProperties;
-
-				queueFlags is a bitmask of VkQueueFlagBits indicating capabilities of the queues in this queue family.
-
-				queueCount is the unsigned integer count of queues in this queue family. Each queue family must support
-				at least one queue.
-
-				timestampValidBits is the unsigned integer count of meaningful bits in the timestamps written via
-				vkCmdWriteTimestamp. The valid range for the count is 36..64 bits, or a value of 0,
-				indicating no support for timestamps. Bits outside the valid range are guaranteed to be zeros.
-
-				minImageTransferGranularity is the minimum granularity supported for image transfer
-				operations on the queues in this queue family.
-			*/
-
-			/*
-			* // Provided by VK_VERSION_1_0
-				typedef enum VkQueueFlagBits {
-				VK_QUEUE_GRAPHICS_BIT = 0x00000001,
-				VK_QUEUE_COMPUTE_BIT = 0x00000002,
-				VK_QUEUE_TRANSFER_BIT = 0x00000004,
-				VK_QUEUE_SPARSE_BINDING_BIT = 0x00000008,
-				} VkQueueFlagBits;
-			*/
-
-			if (queueFamily.queueFlags & vk::QueueFlagBits::eGraphics) {
-				indices.graphicsFamily = i;
-
-				if (debug) {
-					std::cout << "Queue Family " << i << " is suitable for graphics and presenting";
-				}
-			}
-
-			if (device.getSurfaceSupportKHR(i, surface)) {
-				indices.presentFamily = i;
-				if (debug) {
-					std::cout << "\nPresent Family " << i << " is suitable for graphics and presenting\n";
-				}
-			}
-
-			if (indices.isComplete()) {
-				break;
-			}
-
-			i++;
-		}
-
-		return indices;
-	}
 
 	inline vk::Device create_logical_device(
 		vk::PhysicalDevice& physicalDevice,vk::SurfaceKHR surface, bool& debug) {
 
-		QueueFamilyIndices indices = findQueueFamilies(physicalDevice, surface, debug);
+		vkUtil::QueueFamilyIndices indices = vkUtil::findQueueFamilies(physicalDevice, surface, debug);
 		std::vector<uint32_t>uniqueIndices;
 		uniqueIndices.push_back(indices.graphicsFamily.value());
 		if (indices.graphicsFamily.value() != indices.presentFamily.value()) {
@@ -364,7 +276,7 @@ namespace vkInit {
 
 	inline std::array< vk::Queue,2> get_queue(
 		vk::PhysicalDevice physicalDevice,vk::Device device, vk::SurfaceKHR surface, bool debug) {
-		QueueFamilyIndices indices = findQueueFamilies(physicalDevice, surface, debug);
+		vkUtil::QueueFamilyIndices indices = vkUtil::findQueueFamilies(physicalDevice, surface, debug);
 
 		return {
 			device.getQueue(indices.graphicsFamily.value(), 0),
@@ -372,177 +284,5 @@ namespace vkInit {
 		};
 	}
 
-	inline SwapChainSupportDetails get_swap_chain_support(
-		vk::PhysicalDevice physicalDevice, vk::SurfaceKHR surface, bool debug) {
-
-		SwapChainSupportDetails support;
-		/*
-		* typedef struct VkSurfaceCapabilitiesKHR {
-			uint32_t                         minImageCount;
-			uint32_t                         maxImageCount;
-			VkExtent2D                       currentExtent;
-			VkExtent2D                       minImageExtent;
-			VkExtent2D                       maxImageExtent;
-			uint32_t                         maxImageArrayLayers;
-			VkSurfaceTransformFlagsKHR       supportedTransforms;
-			VkSurfaceTransformFlagBitsKHR    currentTransform;
-			VkCompositeAlphaFlagsKHR         supportedCompositeAlpha;
-			VkImageUsageFlags                supportedUsageFlags;
-		} VkSurfaceCapabilitiesKHR;
-		*/
-		support.capabilities = physicalDevice.getSurfaceCapabilitiesKHR(surface);
-
-		if (debug) {
-			
-			std::cout << "\nSwap Chain supports the following capabilities";
-
-			std::cout << "\n\tMinimum image count"<< support.capabilities.minImageCount;
-			std::cout << "\n\tMaximum image count" << support.capabilities.maxImageCount;
-		
-		}
-
-		support.formats = physicalDevice.getSurfaceFormatsKHR(surface);
-
-		if (debug) {
-			/*
-				* typedef struct VkSurfaceFormatKHR {
-					VkFormat           format;
-					VkColorSpaceKHR    colorSpace;
-				} VkSurfaceFormatKHR;
-				*/
-			for (auto supportedFormat : support.formats) {
-				std::cout << "\n supported pixel format" << vk::to_string(supportedFormat.format);
-				std::cout << "\n supported color space" << vk::to_string(supportedFormat.colorSpace);
-			}
-		}
-
-		support.presentModes = physicalDevice.getSurfacePresentModesKHR(surface);
-
-		for (vk::PresentModeKHR presentMode : support.presentModes) {
-			std::cout << '\n\t' << log_present_mode(presentMode) << '\n';
-		}
-		return support;
-
-	}
-
-	inline vk::SurfaceFormatKHR choose_swapchain_surface_format(
-		std::vector<vk::SurfaceFormatKHR> formats){
-		for (auto format : formats) {
-			if (format.format == vk::Format::eB8G8R8A8Unorm
-				&& format.colorSpace == vk::ColorSpaceKHR::eSrgbNonlinear) {
-				return format;
-			}
-		}
-
-		return formats[0];
-	}
-
-	inline vk::PresentModeKHR choose_swapchain_present_mode(
-		std::vector<vk::PresentModeKHR> presentModes) {
-		for (auto presentMode : presentModes) {
-			if (presentMode == vk::PresentModeKHR::eMailbox) {
-				return presentMode;
-			}
-		}
-		
-		return vk::PresentModeKHR::eFifo;
-	}
-
-	inline vk::Extent2D choose_swapchain_extent(
-		uint32_t width,uint32_t height, 
-		vk::SurfaceCapabilitiesKHR capabilities){
 	
-		if (capabilities.currentExtent.width != UINT32_MAX) {
-
-			return capabilities.currentExtent;
-		}
-		else {
-		
-			vk::Extent2D extent = { width,height };
-			extent.width = std::min(
-				capabilities.maxImageExtent.width,
-				std::max(capabilities.minImageExtent.width, width)
-			);
-
-			extent.height = std::min(
-				capabilities.maxImageExtent.height,
-				std::max(capabilities.maxImageExtent.height, height)
-			);
-
-			return extent;
-		}
-	}
-
-	inline SwapChainBundle create_swapchain(
-		vk::Device logicalDevice,vk::PhysicalDevice physicalDevice,vk::SurfaceKHR surface,
-		int width, int height, bool debug){
-		
-		SwapChainSupportDetails support = get_swap_chain_support(physicalDevice, surface, debug);
-		auto format = choose_swapchain_surface_format(support.formats);
-		vk::PresentModeKHR presentMode = choose_swapchain_present_mode(support.presentModes);
-		auto extent = choose_swapchain_extent(width, height, support.capabilities);
-		auto imageCount = std::min(
-			support.capabilities.maxImageCount,
-			support.capabilities.minImageCount + 1
-		);
-
-		/*
-		* VULKAN_HPP_CONSTEXPR SwapchainCreateInfoKHR(
-	  VULKAN_HPP_NAMESPACE::SwapchainCreateFlagsKHR flags_         = {},
-	  VULKAN_HPP_NAMESPACE::SurfaceKHR              surface_       = {},
-	  uint32_t                                      minImageCount_ = {},
-	  VULKAN_HPP_NAMESPACE::Format                  imageFormat_   = VULKAN_HPP_NAMESPACE::Format::eUndefined,
-	  VULKAN_HPP_NAMESPACE::ColorSpaceKHR   imageColorSpace_  = VULKAN_HPP_NAMESPACE::ColorSpaceKHR::eSrgbNonlinear,
-	  VULKAN_HPP_NAMESPACE::Extent2D        imageExtent_      = {},
-	  uint32_t                              imageArrayLayers_ = {},
-	  VULKAN_HPP_NAMESPACE::ImageUsageFlags imageUsage_       = {},
-	  VULKAN_HPP_NAMESPACE::SharingMode     imageSharingMode_ = VULKAN_HPP_NAMESPACE::SharingMode::eExclusive,
-	  uint32_t                              queueFamilyIndexCount_ = {},
-	  const uint32_t *                      pQueueFamilyIndices_   = {},
-	  VULKAN_HPP_NAMESPACE::SurfaceTransformFlagBitsKHR preTransform_ =
-		VULKAN_HPP_NAMESPACE::SurfaceTransformFlagBitsKHR::eIdentity,
-	  VULKAN_HPP_NAMESPACE::CompositeAlphaFlagBitsKHR compositeAlpha_ =
-		VULKAN_HPP_NAMESPACE::CompositeAlphaFlagBitsKHR::eOpaque,
-	  VULKAN_HPP_NAMESPACE::PresentModeKHR presentMode_  = VULKAN_HPP_NAMESPACE::PresentModeKHR::eImmediate,
-	  VULKAN_HPP_NAMESPACE::Bool32         clipped_      = {},
-	  VULKAN_HPP_NAMESPACE::SwapchainKHR   oldSwapchain_ = {} ) VULKAN_HPP_NOEXCEPT
-		*/
-		vk::SwapchainCreateInfoKHR createInfo = vk::SwapchainCreateInfoKHR(
-			vk::SwapchainCreateFlagsKHR(), surface, imageCount, format.format, format.colorSpace,
-			extent, 1, vk::ImageUsageFlagBits::eColorAttachment
-		);
-
-		auto indices = findQueueFamilies(physicalDevice, surface, debug);
-		uint32_t queueFamilyIndices[] = {indices.graphicsFamily.value(),indices.presentFamily.value()};
-
-		if (indices.graphicsFamily.value() != indices.presentFamily.value()) {
-			createInfo.imageSharingMode = vk::SharingMode::eConcurrent;
-			createInfo.queueFamilyIndexCount = 2;
-			createInfo.pQueueFamilyIndices = queueFamilyIndices;
-		}
-		else {
-			createInfo.imageSharingMode = vk::SharingMode::eExclusive;
-		}
-
-		createInfo.preTransform = support.capabilities.currentTransform;
-		createInfo.compositeAlpha = vk::CompositeAlphaFlagBitsKHR::eOpaque;
-		createInfo.presentMode = presentMode;
-		createInfo.clipped = VK_TRUE;
-
-		createInfo.oldSwapchain = vk::SwapchainKHR(nullptr);
-
-		SwapChainBundle bundle{};
-		try {
-			bundle.swapChain = logicalDevice.createSwapchainKHR(createInfo);
-		}
-		catch (vk::SystemError error) {
-			throw std::runtime_error("Failed to create swapchain");
-		}
-		bundle.images = logicalDevice.getSwapchainImagesKHR(bundle.swapChain);
-		bundle.format = format.format;
-		bundle.extent = extent;
-
-		return bundle;
-
-	}
 }

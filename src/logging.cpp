@@ -10,9 +10,7 @@ VKAPI_ATTR VkBool32 VKAPI_CALL vkInit::debugCallback(
 
 	return VK_FALSE;
 }
-
 vk::DebugUtilsMessengerEXT vkInit::make_debug_messenger(vk::Instance& instance, vk::detail::DispatchLoaderDynamic& dldi) {
-
 	/*
 	* DebugUtilsMessengerCreateInfoEXT( VULKAN_HPP_NAMESPACE::DebugUtilsMessengerCreateFlagsEXT flags_           = {},
 									VULKAN_HPP_NAMESPACE::DebugUtilsMessageSeverityFlagsEXT messageSeverity_ = {},

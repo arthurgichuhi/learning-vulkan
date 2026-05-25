@@ -7,6 +7,9 @@ Engine::Engine() {
 }
 
 Engine::~Engine() {
+	for (auto frame : swapchainFrames) {
+		device.destroyImageView(frame.imageView);
+	}
 	device.destroySwapchainKHR(swapchain);
 	device.destroy();
 	instance.destroySurfaceKHR(surface);
@@ -66,7 +69,7 @@ void Engine::make_device() {
 	presentQueue = queues[1];
 	auto bundle = vkInit::create_swapchain(device, physicalDevice, surface, width, height, debugMode);
 	swapchain = bundle.swapChain;
-	swapchainImages = bundle.images;
+	swapchainFrames = bundle.frames;
 	swapchainFormat = bundle.format;
 	swapchainExtent = bundle.extent;
 }

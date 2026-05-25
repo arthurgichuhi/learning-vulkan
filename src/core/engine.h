@@ -3,6 +3,7 @@
 #include "../EngineInstance.h"
 #include "../logging.h"
 #include "../device.h"
+#include "../swapchain.h"
 
 class Engine {
 public:
@@ -29,7 +30,7 @@ private:
 	vk::Queue graphicsQueue{ nullptr };
 	vk::Queue presentQueue{ nullptr };
 	vk::SwapchainKHR swapchain;
-	std::vector<vk::Image> swapchainImages;
+	std::vector<vkInit::SwapChainFrame> swapchainFrames;
 	vk::Format swapchainFormat;
 	vk::Extent2D swapchainExtent;
 
