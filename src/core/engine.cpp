@@ -7,6 +7,7 @@ Engine::Engine() {
 }
 
 Engine::~Engine() {
+	device.destroySwapchainKHR(swapchain);
 	device.destroy();
 	instance.destroySurfaceKHR(surface);
 	instance.destroyDebugUtilsMessengerEXT(debugMessenger, nullptr, dldi);
@@ -63,4 +64,9 @@ void Engine::make_device() {
 	auto queues = vkInit::get_queue(physicalDevice, device, surface, debugMode);
 	graphicsQueue = queues[0];
 	presentQueue = queues[1];
+	auto bundle = vkInit::create_swapchain(device, physicalDevice, surface, width, height, debugMode);
+	swapchain = bundle.swapChain;
+	swapchainImages = bundle.images;
+	swapchainFormat = bundle.format;
+	swapchainExtent = bundle.extent;
 }
