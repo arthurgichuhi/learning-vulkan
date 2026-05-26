@@ -1,15 +1,6 @@
 # ninja log v7
-40	6007	8014063709328340	CMakeFiles/learning-vulkan.dir/src/logging.cpp.obj	d3e09e1daf0b84d
-62	6304	8014177867691725	CMakeFiles/learning-vulkan.dir/src/main.cpp.obj	62bd61ad135f1d93
-69	6461	8014177867761893	CMakeFiles/learning-vulkan.dir/src/core/engine.cpp.obj	c2b5236ed4a4248f
-11030	11621	8013737333839598	learning-vulkan.exe	95023d2c539196b9
-33	53	8014085983485110	clean	47998cb8ffcd20a
 26	6250	8014182559151961	CMakeFiles/learning-vulkan.dir/src/logging.cpp.obj	d3e09e1daf0b84d
-9	6615	8014182558982044	CMakeFiles/learning-vulkan.dir/src/main.cpp.obj	62bd61ad135f1d93
-16	6789	8014182559051884	CMakeFiles/learning-vulkan.dir/src/core/engine.cpp.obj	c2b5236ed4a4248f
-6790	7145	8014182626786493	learning-vulkan.exe	95023d2c539196b9
 45	6424	8014288694674389	CMakeFiles/learning-vulkan.dir/src/main.cpp.obj	62bd61ad135f1d93
-58	6679	8014288694804143	CMakeFiles/learning-vulkan.dir/src/core/engine.cpp.obj	c2b5236ed4a4248f
-6680	6983	8014288761016621	learning-vulkan.exe	95023d2c539196b9
 56	6961	8014290127562429	CMakeFiles/learning-vulkan.dir/src/core/engine.cpp.obj	c2b5236ed4a4248f
 6963	7346	8014290196630326	learning-vulkan.exe	95023d2c539196b9
+33	53	8014085983485110	clean	47998cb8ffcd20a
