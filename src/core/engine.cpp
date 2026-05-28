@@ -1,12 +1,19 @@
 #include "engine.h"
+#include "../pipeline.h"
 
 Engine::Engine() {
 	build_glfw_window();
 	make_instance();
 	make_device();
+	make_pipeline();
 }
 
 Engine::~Engine() {
+
+	device.destroyPipeline(pipeline);
+	device.destroyPipelineLayout(layout);
+	device.destroyRenderPass(renderPass);
+
 	for (auto frame : swapchainFrames) {
 		device.destroyImageView(frame.imageView);
 	}
@@ -72,4 +79,20 @@ void Engine::make_device() {
 	swapchainFrames = bundle.frames;
 	swapchainFormat = bundle.format;
 	swapchainExtent = bundle.extent;
+}
+
+void Engine::make_pipeline() {
+	vkInit::GraphicsPipelineInBundle specification = {};
+
+	specification.device = device;
+	specification.vertexFilepath = "./../../../src/shaders/vertex.spv";
+	specification.fragmentFilePath = "./../../../src/shaders/fragment.spv";
+	specification.swapchainExtent = swapchainExtent;
+	specification.swapchainImageFormat = swapchainFormat;
+
+	auto output = vkInit::make_graphics_pipeline(specification, debugMode);
+	layout = output.layout;
+	renderPass = output.renderPass;
+	pipeline = output.pipeline;
+
 }

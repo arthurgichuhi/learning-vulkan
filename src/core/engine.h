@@ -34,9 +34,16 @@ private:
 	vk::Format swapchainFormat;
 	vk::Extent2D swapchainExtent;
 
+	//pipeline variables
+	vk::PipelineLayout layout;
+	vk::RenderPass renderPass;
+	vk::Pipeline pipeline;
+
 	void build_glfw_window();
 
 	void make_instance();
 
 	void make_device();
+
+	void make_pipeline();
 };
