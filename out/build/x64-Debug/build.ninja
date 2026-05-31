@@ -79,6 +79,16 @@ build CMakeFiles\learning-vulkan.dir\src\logging.cpp.obj: CXX_COMPILER__learning
   TARGET_PDB = learning-vulkan.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\learning-vulkan.dir
 
+build CMakeFiles\learning-vulkan.dir\src\app.cpp.obj: CXX_COMPILER__learning-vulkan_unscanned_Debug C$:\Users\ADMIN\graphics-projects\learning-vulkan\src\app.cpp || cmake_object_order_depends_target_learning-vulkan
+  CONFIG = Debug
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
+  INCLUDES = -IC:\Users\ADMIN\graphics-projects\learning-vulkan\libs\glfw\include -external:IC:\VulkanSDK\1.4.341.1\include -external:W0
+  OBJECT_DIR = CMakeFiles\learning-vulkan.dir
+  OBJECT_FILE_DIR = CMakeFiles\learning-vulkan.dir\src
+  TARGET_COMPILE_PDB = CMakeFiles\learning-vulkan.dir\
+  TARGET_PDB = learning-vulkan.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\learning-vulkan.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target learning-vulkan
@@ -87,7 +97,7 @@ build CMakeFiles\learning-vulkan.dir\src\logging.cpp.obj: CXX_COMPILER__learning
 #############################################
 # Link the executable learning-vulkan.exe
 
-build learning-vulkan.exe: CXX_EXECUTABLE_LINKER__learning-vulkan_Debug CMakeFiles\learning-vulkan.dir\src\main.cpp.obj CMakeFiles\learning-vulkan.dir\src\core\engine.cpp.obj CMakeFiles\learning-vulkan.dir\src\logging.cpp.obj | C$:\Users\ADMIN\graphics-projects\learning-vulkan\libs\glfw\lib\glfw3_mt.lib C$:\VulkanSDK\1.4.341.1\Lib\vulkan-1.lib
+build learning-vulkan.exe: CXX_EXECUTABLE_LINKER__learning-vulkan_Debug CMakeFiles\learning-vulkan.dir\src\main.cpp.obj CMakeFiles\learning-vulkan.dir\src\core\engine.cpp.obj CMakeFiles\learning-vulkan.dir\src\logging.cpp.obj CMakeFiles\learning-vulkan.dir\src\app.cpp.obj | C$:\Users\ADMIN\graphics-projects\learning-vulkan\libs\glfw\lib\glfw3_mt.lib C$:\VulkanSDK\1.4.341.1\Lib\vulkan-1.lib
   CONFIG = Debug
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
   LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console

@@ -16,5 +16,11 @@
   "command": "C:\\PROGRA~1\\MIB055~1\\18\\Insiders\\VC\\Tools\\MSVC\\1451~1.362\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -IC:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\libs\\glfw\\include -external:IC:\\VulkanSDK\\1.4.341.1\\include -external:W0 /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17 /FoCMakeFiles\\learning-vulkan.dir\\src\\logging.cpp.obj /FdCMakeFiles\\learning-vulkan.dir\\ /FS -c C:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\src\\logging.cpp",
   "file": "C:/Users/ADMIN/graphics-projects/learning-vulkan/src/logging.cpp",
   "output": "C:/Users/ADMIN/graphics-projects/learning-vulkan/out/build/x64-Debug/CMakeFiles/learning-vulkan.dir/src/logging.cpp.obj"
+},
+{
+  "directory": "C:/Users/ADMIN/graphics-projects/learning-vulkan/out/build/x64-Debug",
+  "command": "C:\\PROGRA~1\\MIB055~1\\18\\Insiders\\VC\\Tools\\MSVC\\1451~1.362\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -IC:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\libs\\glfw\\include -external:IC:\\VulkanSDK\\1.4.341.1\\include -external:W0 /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17 /FoCMakeFiles\\learning-vulkan.dir\\src\\app.cpp.obj /FdCMakeFiles\\learning-vulkan.dir\\ /FS -c C:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\src\\app.cpp",
+  "file": "C:/Users/ADMIN/graphics-projects/learning-vulkan/src/app.cpp",
+  "output": "C:/Users/ADMIN/graphics-projects/learning-vulkan/out/build/x64-Debug/CMakeFiles/learning-vulkan.dir/src/app.cpp.obj"
 }
 ]

@@ -30,7 +30,12 @@ add_executable(${PROJECT_NAME}
 src/main.cpp
 src/core/engine.cpp
 src/logging.cpp
- "src/shaders.h" "src/pipeline.h")
+ "src/shaders.h" 
+ "src/pipeline.h" 
+ "src/framebuffer.h" 
+ "src/commands.h" 
+ "src/app.h" "src/app.cpp" 
+ "src/frame.h" "src/sync.h")
 target_include_directories(${PROJECT_NAME} PRIVATE ${GLFW3_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} PRIVATE 
     ${GLFW3_LIBRARY}

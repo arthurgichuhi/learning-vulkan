@@ -1,36 +1,36 @@
 #pragma once
 #include "../EngineConfig.h"
 #include "../EngineInstance.h"
-#include "../logging.h"
-#include "../device.h"
-#include "../swapchain.h"
+#include "../frame.h"
 
 class Engine {
 public:
-	Engine();
+	Engine(int width, int height, GLFWwindow* window, bool debug);
 	~Engine();
+
+	void render();
 
 private:
 
-	bool debugMode = true;
+	bool debugMode;
 
-	int width{ 640 };
-	int height{ 480 };
+	int width, height;
 
 	std::string name{};
 
-	GLFWwindow* window{ nullptr };
+	GLFWwindow* window;
 	vk::Instance instance{ nullptr };
 	vk::DebugUtilsMessengerEXT debugMessenger{ nullptr };
 	vk::detail::DispatchLoaderDynamic dldi;
 	vk::SurfaceKHR surface;
 
+	//physical device variables
 	vk::PhysicalDevice physicalDevice{ nullptr };
 	vk::Device device{ nullptr };
 	vk::Queue graphicsQueue{ nullptr };
 	vk::Queue presentQueue{ nullptr };
 	vk::SwapchainKHR swapchain;
-	std::vector<vkInit::SwapChainFrame> swapchainFrames;
+	std::vector<vkUtil::SwapchainFrame> swapchainFrames;
 	vk::Format swapchainFormat;
 	vk::Extent2D swapchainExtent;
 
@@ -39,11 +39,22 @@ private:
 	vk::RenderPass renderPass;
 	vk::Pipeline pipeline;
 
-	void build_glfw_window();
+	//command varibales
+	vk::CommandPool commandPool;
+	vk::CommandBuffer mainCommandBuffer;
+
+	//synchronization variables
+	vk::Fence inFlightFence;
+	vk::Semaphore imageAvailable, renderFinished;
+
 
 	void make_instance();
 
 	void make_device();
 
 	void make_pipeline();
+
+	void finalize_setup();
+
+	void record_draw_commands(vk::CommandBuffer commandBuffer, uint32_t imageIndex);
 };

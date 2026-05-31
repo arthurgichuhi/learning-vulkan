@@ -2,14 +2,10 @@
 #include "EngineConfig.h"
 #include "logging.h"
 #include "queue_families.h"
+#include "frame.h"
 
 namespace vkInit {
 
-	struct SwapChainFrame {
-
-		vk::Image image;
-		vk::ImageView imageView;
-	};
 
 	struct SwapChainSupportDetails {
 		vk::SurfaceCapabilitiesKHR capabilities;
@@ -19,7 +15,7 @@ namespace vkInit {
 
 	struct SwapChainBundle {
 		vk::SwapchainKHR swapChain;
-		std::vector<SwapChainFrame> frames;
+		std::vector<vkUtil::SwapchainFrame> frames;
 		vk::Format format;
 		vk::Extent2D extent;
 	};
@@ -131,9 +127,13 @@ namespace vkInit {
 		int width, int height, bool debug) {
 
 		SwapChainSupportDetails support = get_swap_chain_support(physicalDevice, surface, debug);
+
 		auto format = choose_swapchain_surface_format(support.formats);
+
 		vk::PresentModeKHR presentMode = choose_swapchain_present_mode(support.presentModes);
+
 		auto extent = choose_swapchain_extent(width, height, support.capabilities);
+
 		auto imageCount = std::min(
 			support.capabilities.maxImageCount,
 			support.capabilities.minImageCount + 1
@@ -166,7 +166,7 @@ namespace vkInit {
 		);
 
 		auto indices = vkUtil::findQueueFamilies(physicalDevice, surface, debug);
-		uint32_t queueFamilyIndices[2] = { indices.graphicsFamily.value(),indices.presentFamily.value() };
+		uint32_t queueFamilyIndices[] = { indices.graphicsFamily.value(),indices.presentFamily.value() };
 
 		if (indices.graphicsFamily.value() != indices.presentFamily.value()) {
 			createInfo.imageSharingMode = vk::SharingMode::eConcurrent;
@@ -227,6 +227,7 @@ namespace vkInit {
 			createInfo.subresourceRange.layerCount = 1;
 
 			bundle.frames[i].image = images[i];
+			bundle.frames[i].imageView = logicalDevice.createImageView(createInfo);
 		}
 
 		bundle.format = format.format;

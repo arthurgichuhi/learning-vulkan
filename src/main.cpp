@@ -1,12 +1,10 @@
-#include <GLFW/glfw3.h>
-#include <iostream>
-#include "core/engine.h"
+#include "app.h"
 
 int main() {
 
-    Engine* engine = new Engine();
-
-    delete engine;
+    App* app = new App(640,480,true);
+    app->run();
+    delete app;
     
     return 0;
 }
