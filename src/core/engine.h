@@ -44,8 +44,7 @@ private:
 	vk::CommandBuffer mainCommandBuffer;
 
 	//synchronization variables
-	vk::Fence inFlightFence;
-	vk::Semaphore imageAvailable, renderFinished;
+	int maxFramesInFlight, frameNumber;
 
 
 	void make_instance();

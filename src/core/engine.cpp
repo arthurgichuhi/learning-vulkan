@@ -23,10 +23,6 @@ Engine::~Engine() {
 
 	device.waitIdle();
 
-	device.destroyFence(inFlightFence);
-	device.destroySemaphore(imageAvailable);
-	device.destroySemaphore(renderFinished);
-
 	device.destroyCommandPool(commandPool);
 
 	device.destroyPipeline(pipeline);
@@ -36,6 +32,9 @@ Engine::~Engine() {
 	for (vkUtil::SwapchainFrame frame : swapchainFrames) {
 		device.destroyImageView(frame.imageView);
 		device.destroyFramebuffer(frame.frameBuffer);
+		device.destroyFence(frame.inFlight);
+		device.destroySemaphore(frame.imageAvailable);
+		device.destroySemaphore(frame.renderFinished);
 	}
 	device.destroySwapchainKHR(swapchain);
 	device.destroy();
@@ -80,6 +79,8 @@ void Engine::make_device() {
 	swapchainFrames = bundle.frames;
 	swapchainFormat = bundle.format;
 	swapchainExtent = bundle.extent;
+	maxFramesInFlight = static_cast<int>(swapchainFrames.size());
+	frameNumber = 0;
 }
 
 void Engine::make_pipeline() {
@@ -110,9 +111,11 @@ void Engine::finalize_setup(){
 	vkInit::commandBufferInputChunk commandBufferInput = { device, commandPool, swapchainFrames };
 	mainCommandBuffer = vkInit::make_command_buffers(commandBufferInput, debugMode);
 
-	inFlightFence = vkInit::make_fence(device, debugMode);
-	imageAvailable = vkInit::make_semaphore(device, debugMode);
-	renderFinished = vkInit::make_semaphore(device, debugMode);
+	for (auto& frame : swapchainFrames) {
+		frame.inFlight = vkInit::make_fence(device, debugMode);
+		frame.imageAvailable = vkInit::make_semaphore(device, debugMode);
+		frame.renderFinished = vkInit::make_semaphore(device, debugMode);
+	}
 }
 
 void Engine::record_draw_commands(vk::CommandBuffer commandBuffer, uint32_t imageIndex) {
@@ -135,6 +138,7 @@ void Engine::record_draw_commands(vk::CommandBuffer commandBuffer, uint32_t imag
 	renderPassInfo.renderArea.offset.y = 0;
 	renderPassInfo.renderArea.extent = swapchainExtent;
 	vk::ClearValue clearColor = { std::array<float,4>{1.0f, 0.5f, 0.25f, 1.0f} };
+	renderPassInfo.clearValueCount = 1;
 	renderPassInfo.pClearValues = &clearColor;
 
 	commandBuffer.beginRenderPass(&renderPassInfo, vk::SubpassContents::eInline);
@@ -158,31 +162,31 @@ void Engine::record_draw_commands(vk::CommandBuffer commandBuffer, uint32_t imag
 
 void Engine::render() {
 
-	device.waitForFences(1, &inFlightFence, VK_TRUE, UINT64_MAX);
-	device.resetFences(1, &inFlightFence);
+	device.waitForFences(1, &swapchainFrames[frameNumber].inFlight, VK_TRUE, UINT64_MAX);
+	device.resetFences(1, &swapchainFrames[frameNumber].inFlight);
 
-	uint32_t imageIndex{ device.acquireNextImageKHR(swapchain,UINT64_MAX,imageAvailable,nullptr).value };
+	uint32_t imageIndex{ device.acquireNextImageKHR(swapchain,UINT64_MAX,swapchainFrames[frameNumber].imageAvailable,nullptr).value };
 	
-	auto commandBuffer = swapchainFrames[imageIndex].commandBuffer;
+	auto commandBuffer = swapchainFrames[frameNumber].commandBuffer;
 
 	commandBuffer.reset();
 
 	record_draw_commands(commandBuffer, imageIndex);
 
 	vk::SubmitInfo submitInfo = {};
-	vk::Semaphore waitSemaphores[] = { imageAvailable };
+	vk::Semaphore waitSemaphores[] = { swapchainFrames[frameNumber].imageAvailable };
 	vk::PipelineStageFlags waitStages[] = { vk::PipelineStageFlagBits::eColorAttachmentOutput};
 	submitInfo.waitSemaphoreCount = 1;
 	submitInfo.pWaitSemaphores = waitSemaphores;
 	submitInfo.commandBufferCount = 1;
 	submitInfo.pCommandBuffers = &commandBuffer;
-	vk::Semaphore signalSemaphores[] = { renderFinished };
+	vk::Semaphore signalSemaphores[] = { swapchainFrames[frameNumber].renderFinished };
 	submitInfo.signalSemaphoreCount = 1;
 	submitInfo.pSignalSemaphores = signalSemaphores;
 
 	try {
 
-		graphicsQueue.submit(submitInfo, inFlightFence);
+		graphicsQueue.submit(submitInfo, swapchainFrames[frameNumber].inFlight);
 	}
 	catch (vk::SystemError error) {
 		if (debugMode) {
@@ -199,4 +203,6 @@ void Engine::render() {
 	presentInfo.pImageIndices = &imageIndex;
 
 	presentQueue.presentKHR(presentInfo);
+
+	frameNumber = (frameNumber + 1) % maxFramesInFlight;
 }
