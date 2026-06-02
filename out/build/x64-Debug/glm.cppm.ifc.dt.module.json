@@ -1,0 +1,15 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "glm.obj",
+            "outputs": [
+                "C:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\vc140.pdb",
+                "C:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\out\\build\\x64-Debug\\glm.cppm.ifc.dt.module.json",
+                "C:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\out\\build\\x64-Debug\\glm.cppm.ifc.dt.d.json"
+            ],
+            "requires": []
+        }
+    ]
+}

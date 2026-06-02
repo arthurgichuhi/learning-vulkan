@@ -1,11 +1,13 @@
 #pragma once
 #include "EngineConfig.h"
 #include "./core/engine.h"
+#include "./core/scene.h"
 
 class App {
 private:
 	Engine* graphicsEngine;
 	GLFWwindow* window;
+	Scene* scene;
 
 	double lastTime, currentTime;
 	int numFrames;

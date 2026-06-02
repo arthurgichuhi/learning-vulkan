@@ -2,13 +2,14 @@
 #include "../EngineConfig.h"
 #include "../EngineInstance.h"
 #include "../frame.h"
+#include "scene.h"
 
 class Engine {
 public:
 	Engine(int width, int height, GLFWwindow* window, bool debug);
 	~Engine();
 
-	void render();
+	void render(Scene* scene);
 
 private:
 
@@ -35,7 +36,7 @@ private:
 	vk::Extent2D swapchainExtent;
 
 	//pipeline variables
-	vk::PipelineLayout layout;
+	vk::PipelineLayout pipelineLayout;
 	vk::RenderPass renderPass;
 	vk::Pipeline pipeline;
 
@@ -55,5 +56,5 @@ private:
 
 	void finalize_setup();
 
-	void record_draw_commands(vk::CommandBuffer commandBuffer, uint32_t imageIndex);
+	void record_draw_commands(vk::CommandBuffer commandBuffer,Scene* scene, uint32_t imageIndex);
 };

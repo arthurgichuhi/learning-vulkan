@@ -26,7 +26,7 @@ Engine::~Engine() {
 	device.destroyCommandPool(commandPool);
 
 	device.destroyPipeline(pipeline);
-	device.destroyPipelineLayout(layout);
+	device.destroyPipelineLayout(pipelineLayout);
 	device.destroyRenderPass(renderPass);
 
 	for (vkUtil::SwapchainFrame frame : swapchainFrames) {
@@ -93,7 +93,7 @@ void Engine::make_pipeline() {
 	specification.swapchainImageFormat = swapchainFormat;
 
 	auto output = vkInit::make_graphics_pipeline(specification, debugMode);
-	layout = output.layout;
+	pipelineLayout = output.layout;
 	renderPass = output.renderPass;
 	pipeline = output.pipeline;
 
@@ -118,7 +118,7 @@ void Engine::finalize_setup(){
 	}
 }
 
-void Engine::record_draw_commands(vk::CommandBuffer commandBuffer, uint32_t imageIndex) {
+void Engine::record_draw_commands(vk::CommandBuffer commandBuffer,Scene* scene, uint32_t imageIndex) {
 
 	vk::CommandBufferBeginInfo beginInfo = {};
 	try {
@@ -144,8 +144,15 @@ void Engine::record_draw_commands(vk::CommandBuffer commandBuffer, uint32_t imag
 	commandBuffer.beginRenderPass(&renderPassInfo, vk::SubpassContents::eInline);
 
 	commandBuffer.bindPipeline(vk::PipelineBindPoint::eGraphics, pipeline);
+	for (auto position : scene->trianglePositions) {
+		glm::mat4 model = glm::translate(glm::mat4(1.0), position);
+		vkUtil::ObjectData objData;
+		objData.model = model;
+		commandBuffer.pushConstants(
+			pipelineLayout, vk::ShaderStageFlagBits::eVertex, 0,sizeof(objData), & objData);
+		commandBuffer.draw(3, 1, 0, 0);
+	}
 
-	commandBuffer.draw(3,1,0,0);
 
 	commandBuffer.endRenderPass();
 
@@ -160,7 +167,7 @@ void Engine::record_draw_commands(vk::CommandBuffer commandBuffer, uint32_t imag
 	}
 }
 
-void Engine::render() {
+void Engine::render(Scene* scene) {
 
 	device.waitForFences(1, &swapchainFrames[frameNumber].inFlight, VK_TRUE, UINT64_MAX);
 	device.resetFences(1, &swapchainFrames[frameNumber].inFlight);
@@ -171,7 +178,7 @@ void Engine::render() {
 
 	commandBuffer.reset();
 
-	record_draw_commands(commandBuffer, imageIndex);
+	record_draw_commands(commandBuffer,scene, imageIndex);
 
 	vk::SubmitInfo submitInfo = {};
 	vk::Semaphore waitSemaphores[] = { swapchainFrames[frameNumber].imageAvailable };
