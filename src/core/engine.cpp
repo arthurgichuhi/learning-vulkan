@@ -29,14 +29,8 @@ Engine::~Engine() {
 	device.destroyPipelineLayout(pipelineLayout);
 	device.destroyRenderPass(renderPass);
 
-	for (vkUtil::SwapchainFrame frame : swapchainFrames) {
-		device.destroyImageView(frame.imageView);
-		device.destroyFramebuffer(frame.frameBuffer);
-		device.destroyFence(frame.inFlight);
-		device.destroySemaphore(frame.imageAvailable);
-		device.destroySemaphore(frame.renderFinished);
-	}
-	device.destroySwapchainKHR(swapchain);
+	cleanup_swapchain();
+
 	device.destroy();
 	instance.destroySurfaceKHR(surface);
 	instance.destroyDebugUtilsMessengerEXT(debugMessenger, nullptr, dldi);
@@ -74,13 +68,38 @@ void Engine::make_device() {
 	auto queues = vkInit::get_queue(physicalDevice, device, surface, debugMode);
 	graphicsQueue = queues[0];
 	presentQueue = queues[1];
+
+	make_swapchain();
+	
+	frameNumber = 0;
+}
+
+void Engine::make_swapchain(){
 	auto bundle = vkInit::create_swapchain(device, physicalDevice, surface, width, height, debugMode);
 	swapchain = bundle.swapChain;
 	swapchainFrames = bundle.frames;
 	swapchainFormat = bundle.format;
 	swapchainExtent = bundle.extent;
 	maxFramesInFlight = static_cast<int>(swapchainFrames.size());
-	frameNumber = 0;
+}
+
+void Engine::recreate_swapchain() {
+
+	width = 0;
+	height = 0;
+	while (width == 0 || height == 0) {
+		glfwGetFramebufferSize(window, &width, &height);
+		glfwWaitEvents();
+	}
+
+	device.waitIdle();
+
+	cleanup_swapchain();
+	make_swapchain();
+	make_framebuffer();
+	make_frame_sync_objects();
+	vkInit::commandBufferInputChunk commandBufferInput = {device,commandPool,swapchainFrames};
+	vkInit::make_frame_command_buffer(commandBufferInput, debugMode);
 }
 
 void Engine::make_pipeline() {
@@ -99,23 +118,33 @@ void Engine::make_pipeline() {
 
 }
 
-void Engine::finalize_setup(){
+void Engine::make_framebuffer() {
 	vkInit::FrameBufferInput frameBufferInput;
 	frameBufferInput.device = device;
 	frameBufferInput.renderpass = renderPass;
 	frameBufferInput.swapchainExtent = swapchainExtent;
 	vkInit::make_framebuffers(frameBufferInput, swapchainFrames, debugMode);
+}
 
-	commandPool = vkInit::make_command_pool(device, physicalDevice, surface, debugMode);
-
-	vkInit::commandBufferInputChunk commandBufferInput = { device, commandPool, swapchainFrames };
-	mainCommandBuffer = vkInit::make_command_buffers(commandBufferInput, debugMode);
-
+void Engine::make_frame_sync_objects() {
 	for (auto& frame : swapchainFrames) {
 		frame.inFlight = vkInit::make_fence(device, debugMode);
 		frame.imageAvailable = vkInit::make_semaphore(device, debugMode);
 		frame.renderFinished = vkInit::make_semaphore(device, debugMode);
 	}
+}
+
+void Engine::finalize_setup(){
+
+	make_framebuffer();
+	
+	commandPool = vkInit::make_command_pool(device, physicalDevice, surface, debugMode);
+
+	vkInit::commandBufferInputChunk commandBufferInput = { device, commandPool, swapchainFrames };
+	mainCommandBuffer = vkInit::make_command_buffer(commandBufferInput, debugMode);
+	vkInit::make_frame_command_buffer(commandBufferInput, debugMode);
+
+	make_frame_sync_objects();
 }
 
 void Engine::record_draw_commands(vk::CommandBuffer commandBuffer,Scene* scene, uint32_t imageIndex) {
@@ -172,7 +201,27 @@ void Engine::render(Scene* scene) {
 	device.waitForFences(1, &swapchainFrames[frameNumber].inFlight, VK_TRUE, UINT64_MAX);
 	device.resetFences(1, &swapchainFrames[frameNumber].inFlight);
 
-	uint32_t imageIndex{ device.acquireNextImageKHR(swapchain,UINT64_MAX,swapchainFrames[frameNumber].imageAvailable,nullptr).value };
+	uint32_t imageIndex;
+	try {
+		vk::ResultValue acquire = device.acquireNextImageKHR(
+			swapchain, UINT64_MAX,
+			swapchainFrames[frameNumber].imageAvailable, nullptr
+		);
+		imageIndex = acquire.value;
+	}
+	catch (vk::OutOfDateKHRError error) {
+		std::cout << "Recreate" << std::endl;
+		recreate_swapchain();
+		return;
+	}
+	catch (vk::IncompatibleDisplayKHRError error) {
+		std::cout << "Recreate" << std::endl;
+		recreate_swapchain();
+		return;
+	}
+	catch (vk::SystemError error) {
+		std::cout << "Failed to acquire swapchain image!" << std::endl;
+	}
 	
 	auto commandBuffer = swapchainFrames[frameNumber].commandBuffer;
 
@@ -209,7 +258,31 @@ void Engine::render(Scene* scene) {
 	presentInfo.pSwapchains = swapchains;
 	presentInfo.pImageIndices = &imageIndex;
 
-	presentQueue.presentKHR(presentInfo);
+	vk::Result present;
+
+	try {
+		present = presentQueue.presentKHR(presentInfo);
+	}
+	catch (vk::OutOfDateKHRError error) {
+		present = vk::Result::eErrorOutOfDateKHR;
+	}
+
+	if (present == vk::Result::eErrorOutOfDateKHR || present == vk::Result::eSuboptimalKHR) {
+		std::cout << "Recreate" << std::endl;
+		recreate_swapchain();
+		return;
+	}
 
 	frameNumber = (frameNumber + 1) % maxFramesInFlight;
+}
+
+void Engine::cleanup_swapchain() {
+	for (vkUtil::SwapchainFrame frame : swapchainFrames) {
+		device.destroyImageView(frame.imageView);
+		device.destroyFramebuffer(frame.frameBuffer);
+		device.destroyFence(frame.inFlight);
+		device.destroySemaphore(frame.imageAvailable);
+		device.destroySemaphore(frame.renderFinished);
+	}
+	device.destroySwapchainKHR(swapchain);
 }
