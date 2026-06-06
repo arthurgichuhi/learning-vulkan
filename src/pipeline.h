@@ -2,6 +2,7 @@
 #include "EngineConfig.h"
 #include "shaders.h"
 #include "render_structs.h"
+#include "./core/mesh.h"
 namespace vkInit {
 	struct GraphicsPipelineInBundle{
 		vk::Device device;
@@ -84,10 +85,14 @@ namespace vkInit {
 		std::vector<vk::PipelineShaderStageCreateInfo> shaderStages;
 
 		//vertex input
+		auto bindingDescription = vkMesh::getPosColorBindingDescription();
+		auto attributeDescription = vkMesh::getPosColorAttributeDescription();
 		vk::PipelineVertexInputStateCreateInfo vertexInputInfo = {};
 		vertexInputInfo.flags = vk::PipelineVertexInputStateCreateFlags();
-		vertexInputInfo.vertexBindingDescriptionCount = 0;
-		vertexInputInfo.vertexAttributeDescriptionCount = 0;
+		vertexInputInfo.vertexBindingDescriptionCount = 1;
+		vertexInputInfo.pVertexBindingDescriptions = &bindingDescription;
+		vertexInputInfo.vertexAttributeDescriptionCount = 2;
+		vertexInputInfo.pVertexAttributeDescriptions = attributeDescription.data();
 		pipelineInfo.pVertexInputState = &vertexInputInfo;
 
 		//inputassembly

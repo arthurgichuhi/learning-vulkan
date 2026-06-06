@@ -9,3 +9,15 @@
 #include <fstream>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+
+struct BufferInputChunk {
+	size_t size;
+	vk::BufferUsageFlags usage;
+	vk::Device logicalDevice;
+	vk::PhysicalDevice physicalDevice;
+};
+
+struct Buffer {
+	vk::Buffer buffer;
+	vk::DeviceMemory bufferMemory;
+};

@@ -3,6 +3,7 @@
 #include "../EngineInstance.h"
 #include "../frame.h"
 #include "scene.h"
+#include "triangle_mesh.h"
 
 class Engine {
 public:
@@ -47,9 +48,11 @@ private:
 	//synchronization variables
 	int maxFramesInFlight, frameNumber;
 
+	//assets pointers
+	TriangleMesh* triangleMesh;
+
 
 	void make_instance();
-
 	void make_device();
 	void make_swapchain();
 	void recreate_swapchain();
@@ -59,6 +62,9 @@ private:
 	void finalize_setup();
 	void make_framebuffer();
 	void make_frame_sync_objects();
+
+	void make_assets();
+	void prepare_scene(vk::CommandBuffer commandBuffer);
 
 	void record_draw_commands(vk::CommandBuffer commandBuffer,Scene* scene, uint32_t imageIndex);
 

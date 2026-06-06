@@ -17,6 +17,7 @@ Engine::Engine(int width, int height, GLFWwindow* window, bool debug) {
 	make_device();
 	make_pipeline();
 	finalize_setup();
+	make_assets();
 }
 
 Engine::~Engine() {
@@ -30,6 +31,8 @@ Engine::~Engine() {
 	device.destroyRenderPass(renderPass);
 
 	cleanup_swapchain();
+
+	delete triangleMesh;
 
 	device.destroy();
 	instance.destroySurfaceKHR(surface);
@@ -147,6 +150,16 @@ void Engine::finalize_setup(){
 	make_frame_sync_objects();
 }
 
+void Engine::make_assets() {
+	triangleMesh = new TriangleMesh(device,physicalDevice);
+}
+
+void Engine::prepare_scene(vk::CommandBuffer commandBuffer) {
+	vk::Buffer vertexBuffers[] = { triangleMesh->vertexBuffer.buffer };
+	vk::DeviceSize offsets[] = { 0 };
+	commandBuffer.bindVertexBuffers(0, 1, vertexBuffers, offsets);
+}
+
 void Engine::record_draw_commands(vk::CommandBuffer commandBuffer,Scene* scene, uint32_t imageIndex) {
 
 	vk::CommandBufferBeginInfo beginInfo = {};
@@ -173,6 +186,7 @@ void Engine::record_draw_commands(vk::CommandBuffer commandBuffer,Scene* scene, 
 	commandBuffer.beginRenderPass(&renderPassInfo, vk::SubpassContents::eInline);
 
 	commandBuffer.bindPipeline(vk::PipelineBindPoint::eGraphics, pipeline);
+	prepare_scene(commandBuffer);
 	for (auto position : scene->trianglePositions) {
 		glm::mat4 model = glm::translate(glm::mat4(1.0), position);
 		vkUtil::ObjectData objData;

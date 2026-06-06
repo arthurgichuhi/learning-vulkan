@@ -38,12 +38,7 @@ src/core/engine.cpp
 src/logging.cpp
 src/core/scene.cpp
 src/app.cpp
- "src/shaders.h" 
- "src/pipeline.h" 
- "src/framebuffer.h" 
- "src/commands.h"  
- "src/frame.h" "src/sync.h" 
- "src/render_structs.h")
+src/core/triangle_mesh.cpp)
 target_include_directories(${PROJECT_NAME} PRIVATE ${GLFW3_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} PRIVATE 
     ${GLFW3_LIBRARY}
