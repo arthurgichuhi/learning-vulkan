@@ -69,42 +69,72 @@ build CMakeFiles\learning-vulkan.dir\src\core\engine.cpp.obj: CXX_COMPILER__lear
   TARGET_PDB = learning-vulkan.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\learning-vulkan.dir
 
-build CMakeFiles\learning-vulkan.dir\src\logging.cpp.obj: CXX_COMPILER__learning-vulkan_unscanned_Debug C$:\Users\ADMIN\graphics-projects\learning-vulkan\src\logging.cpp || cmake_object_order_depends_target_learning-vulkan
+build CMakeFiles\learning-vulkan.dir\src\control\logging.cpp.obj: CXX_COMPILER__learning-vulkan_unscanned_Debug C$:\Users\ADMIN\graphics-projects\learning-vulkan\src\control\logging.cpp || cmake_object_order_depends_target_learning-vulkan
   CONFIG = Debug
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
   INCLUDES = -IC:\Users\ADMIN\graphics-projects\learning-vulkan\libs\glm -IC:\Users\ADMIN\graphics-projects\learning-vulkan\libs\glfw\include -external:IC:\VulkanSDK\1.4.341.1\include -external:W0
   OBJECT_DIR = CMakeFiles\learning-vulkan.dir
-  OBJECT_FILE_DIR = CMakeFiles\learning-vulkan.dir\src
+  OBJECT_FILE_DIR = CMakeFiles\learning-vulkan.dir\src\control
   TARGET_COMPILE_PDB = CMakeFiles\learning-vulkan.dir\
   TARGET_PDB = learning-vulkan.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\learning-vulkan.dir
 
-build CMakeFiles\learning-vulkan.dir\src\core\scene.cpp.obj: CXX_COMPILER__learning-vulkan_unscanned_Debug C$:\Users\ADMIN\graphics-projects\learning-vulkan\src\core\scene.cpp || cmake_object_order_depends_target_learning-vulkan
+build CMakeFiles\learning-vulkan.dir\src\model\scene.cpp.obj: CXX_COMPILER__learning-vulkan_unscanned_Debug C$:\Users\ADMIN\graphics-projects\learning-vulkan\src\model\scene.cpp || cmake_object_order_depends_target_learning-vulkan
   CONFIG = Debug
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
   INCLUDES = -IC:\Users\ADMIN\graphics-projects\learning-vulkan\libs\glm -IC:\Users\ADMIN\graphics-projects\learning-vulkan\libs\glfw\include -external:IC:\VulkanSDK\1.4.341.1\include -external:W0
   OBJECT_DIR = CMakeFiles\learning-vulkan.dir
-  OBJECT_FILE_DIR = CMakeFiles\learning-vulkan.dir\src\core
+  OBJECT_FILE_DIR = CMakeFiles\learning-vulkan.dir\src\model
   TARGET_COMPILE_PDB = CMakeFiles\learning-vulkan.dir\
   TARGET_PDB = learning-vulkan.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\learning-vulkan.dir
 
-build CMakeFiles\learning-vulkan.dir\src\app.cpp.obj: CXX_COMPILER__learning-vulkan_unscanned_Debug C$:\Users\ADMIN\graphics-projects\learning-vulkan\src\app.cpp || cmake_object_order_depends_target_learning-vulkan
+build CMakeFiles\learning-vulkan.dir\src\control\app.cpp.obj: CXX_COMPILER__learning-vulkan_unscanned_Debug C$:\Users\ADMIN\graphics-projects\learning-vulkan\src\control\app.cpp || cmake_object_order_depends_target_learning-vulkan
   CONFIG = Debug
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
   INCLUDES = -IC:\Users\ADMIN\graphics-projects\learning-vulkan\libs\glm -IC:\Users\ADMIN\graphics-projects\learning-vulkan\libs\glfw\include -external:IC:\VulkanSDK\1.4.341.1\include -external:W0
   OBJECT_DIR = CMakeFiles\learning-vulkan.dir
-  OBJECT_FILE_DIR = CMakeFiles\learning-vulkan.dir\src
+  OBJECT_FILE_DIR = CMakeFiles\learning-vulkan.dir\src\control
   TARGET_COMPILE_PDB = CMakeFiles\learning-vulkan.dir\
   TARGET_PDB = learning-vulkan.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\learning-vulkan.dir
 
-build CMakeFiles\learning-vulkan.dir\src\core\triangle_mesh.cpp.obj: CXX_COMPILER__learning-vulkan_unscanned_Debug C$:\Users\ADMIN\graphics-projects\learning-vulkan\src\core\triangle_mesh.cpp || cmake_object_order_depends_target_learning-vulkan
+build CMakeFiles\learning-vulkan.dir\src\model\triangle_mesh.cpp.obj: CXX_COMPILER__learning-vulkan_unscanned_Debug C$:\Users\ADMIN\graphics-projects\learning-vulkan\src\model\triangle_mesh.cpp || cmake_object_order_depends_target_learning-vulkan
   CONFIG = Debug
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
   INCLUDES = -IC:\Users\ADMIN\graphics-projects\learning-vulkan\libs\glm -IC:\Users\ADMIN\graphics-projects\learning-vulkan\libs\glfw\include -external:IC:\VulkanSDK\1.4.341.1\include -external:W0
   OBJECT_DIR = CMakeFiles\learning-vulkan.dir
-  OBJECT_FILE_DIR = CMakeFiles\learning-vulkan.dir\src\core
+  OBJECT_FILE_DIR = CMakeFiles\learning-vulkan.dir\src\model
+  TARGET_COMPILE_PDB = CMakeFiles\learning-vulkan.dir\
+  TARGET_PDB = learning-vulkan.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\learning-vulkan.dir
+
+build CMakeFiles\learning-vulkan.dir\src\model\square_mesh.cpp.obj: CXX_COMPILER__learning-vulkan_unscanned_Debug C$:\Users\ADMIN\graphics-projects\learning-vulkan\src\model\square_mesh.cpp || cmake_object_order_depends_target_learning-vulkan
+  CONFIG = Debug
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
+  INCLUDES = -IC:\Users\ADMIN\graphics-projects\learning-vulkan\libs\glm -IC:\Users\ADMIN\graphics-projects\learning-vulkan\libs\glfw\include -external:IC:\VulkanSDK\1.4.341.1\include -external:W0
+  OBJECT_DIR = CMakeFiles\learning-vulkan.dir
+  OBJECT_FILE_DIR = CMakeFiles\learning-vulkan.dir\src\model
+  TARGET_COMPILE_PDB = CMakeFiles\learning-vulkan.dir\
+  TARGET_PDB = learning-vulkan.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\learning-vulkan.dir
+
+build CMakeFiles\learning-vulkan.dir\src\model\star_mesh.cpp.obj: CXX_COMPILER__learning-vulkan_unscanned_Debug C$:\Users\ADMIN\graphics-projects\learning-vulkan\src\model\star_mesh.cpp || cmake_object_order_depends_target_learning-vulkan
+  CONFIG = Debug
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
+  INCLUDES = -IC:\Users\ADMIN\graphics-projects\learning-vulkan\libs\glm -IC:\Users\ADMIN\graphics-projects\learning-vulkan\libs\glfw\include -external:IC:\VulkanSDK\1.4.341.1\include -external:W0
+  OBJECT_DIR = CMakeFiles\learning-vulkan.dir
+  OBJECT_FILE_DIR = CMakeFiles\learning-vulkan.dir\src\model
+  TARGET_COMPILE_PDB = CMakeFiles\learning-vulkan.dir\
+  TARGET_PDB = learning-vulkan.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\learning-vulkan.dir
+
+build CMakeFiles\learning-vulkan.dir\src\model\vertex_menagerie.cpp.obj: CXX_COMPILER__learning-vulkan_unscanned_Debug C$:\Users\ADMIN\graphics-projects\learning-vulkan\src\model\vertex_menagerie.cpp || cmake_object_order_depends_target_learning-vulkan
+  CONFIG = Debug
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
+  INCLUDES = -IC:\Users\ADMIN\graphics-projects\learning-vulkan\libs\glm -IC:\Users\ADMIN\graphics-projects\learning-vulkan\libs\glfw\include -external:IC:\VulkanSDK\1.4.341.1\include -external:W0
+  OBJECT_DIR = CMakeFiles\learning-vulkan.dir
+  OBJECT_FILE_DIR = CMakeFiles\learning-vulkan.dir\src\model
   TARGET_COMPILE_PDB = CMakeFiles\learning-vulkan.dir\
   TARGET_PDB = learning-vulkan.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\learning-vulkan.dir
@@ -117,7 +147,7 @@ build CMakeFiles\learning-vulkan.dir\src\core\triangle_mesh.cpp.obj: CXX_COMPILE
 #############################################
 # Link the executable learning-vulkan.exe
 
-build learning-vulkan.exe: CXX_EXECUTABLE_LINKER__learning-vulkan_Debug CMakeFiles\learning-vulkan.dir\src\main.cpp.obj CMakeFiles\learning-vulkan.dir\src\core\engine.cpp.obj CMakeFiles\learning-vulkan.dir\src\logging.cpp.obj CMakeFiles\learning-vulkan.dir\src\core\scene.cpp.obj CMakeFiles\learning-vulkan.dir\src\app.cpp.obj CMakeFiles\learning-vulkan.dir\src\core\triangle_mesh.cpp.obj | C$:\Users\ADMIN\graphics-projects\learning-vulkan\libs\glfw\lib\glfw3_mt.lib C$:\VulkanSDK\1.4.341.1\Lib\vulkan-1.lib
+build learning-vulkan.exe: CXX_EXECUTABLE_LINKER__learning-vulkan_Debug CMakeFiles\learning-vulkan.dir\src\main.cpp.obj CMakeFiles\learning-vulkan.dir\src\core\engine.cpp.obj CMakeFiles\learning-vulkan.dir\src\control\logging.cpp.obj CMakeFiles\learning-vulkan.dir\src\model\scene.cpp.obj CMakeFiles\learning-vulkan.dir\src\control\app.cpp.obj CMakeFiles\learning-vulkan.dir\src\model\triangle_mesh.cpp.obj CMakeFiles\learning-vulkan.dir\src\model\square_mesh.cpp.obj CMakeFiles\learning-vulkan.dir\src\model\star_mesh.cpp.obj CMakeFiles\learning-vulkan.dir\src\model\vertex_menagerie.cpp.obj | C$:\Users\ADMIN\graphics-projects\learning-vulkan\libs\glfw\lib\glfw3_mt.lib C$:\VulkanSDK\1.4.341.1\Lib\vulkan-1.lib
   CONFIG = Debug
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
   LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console

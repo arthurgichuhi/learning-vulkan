@@ -35,10 +35,12 @@ target_link_libraries(glfw INTERFACE ${GLFW3_LIBRARY})
 add_executable(${PROJECT_NAME} 
 src/main.cpp
 src/core/engine.cpp
-src/logging.cpp
-src/core/scene.cpp
-src/app.cpp
-src/core/triangle_mesh.cpp)
+"src/control/logging.cpp"
+"src/model/scene.cpp"
+"src/control/app.cpp"
+"src/core/vkUtil/memory.h"
+"src/model/triangle_mesh.cpp" "src/model/square_mesh.cpp" "src/model/star_mesh.h" 
+"src/model/star_mesh.cpp" "src/model/vertex_menagerie.cpp")
 target_include_directories(${PROJECT_NAME} PRIVATE ${GLFW3_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} PRIVATE 
     ${GLFW3_LIBRARY}

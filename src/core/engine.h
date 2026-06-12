@@ -1,9 +1,9 @@
 #pragma once
 #include "../EngineConfig.h"
-#include "../EngineInstance.h"
-#include "../frame.h"
-#include "scene.h"
-#include "triangle_mesh.h"
+#include "vkInit/EngineInstance.h"
+#include "vkUtil/frame.h"
+#include "../model/scene.h"
+#include "../model/vertex_menagerie.h"
 
 class Engine {
 public:
@@ -49,7 +49,7 @@ private:
 	int maxFramesInFlight, frameNumber;
 
 	//assets pointers
-	TriangleMesh* triangleMesh;
+	VertexMenagerie* meshes;
 
 
 	void make_instance();

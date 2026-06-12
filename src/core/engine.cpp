@@ -1,11 +1,11 @@
 #include "engine.h"
-#include "../logging.h"
-#include "../device.h"
-#include "../swapchain.h"
-#include "../pipeline.h"
-#include "../framebuffer.h"
-#include "../commands.h"
-#include "../sync.h"
+#include "../control/logging.h"
+#include "vkInit/device.h"
+#include "vkInit/swapchain.h"
+#include "vkInit/pipeline.h"
+#include "vkInit/framebuffer.h"
+#include "vkInit/commands.h"
+#include "vkInit/sync.h"
 
 
 Engine::Engine(int width, int height, GLFWwindow* window, bool debug) {
@@ -32,7 +32,7 @@ Engine::~Engine() {
 
 	cleanup_swapchain();
 
-	delete triangleMesh;
+	delete meshes;
 
 	device.destroy();
 	instance.destroySurfaceKHR(surface);
@@ -151,11 +151,64 @@ void Engine::finalize_setup(){
 }
 
 void Engine::make_assets() {
-	triangleMesh = new TriangleMesh(device,physicalDevice);
+	meshes = new VertexMenagerie();
+
+	std::vector<float> vertices = { {
+		 0.0f, -0.05f, 0.0f, 1.0f, 0.0f,
+		 0.05f, 0.05f, 0.0f, 1.0f, 0.0f,
+		-0.05f, 0.05f, 0.0f, 1.0f, 0.0f
+	} };
+
+	meshTypes type = meshTypes::TRIANGLE;
+	meshes->consume(type, vertices);
+
+	vertices = { {
+		-0.05f,  0.05f, 1.0f, 0.0f, 0.0f,
+		-0.05f, -0.05f, 1.0f, 0.0f, 0.0f,
+		 0.05f, -0.05f, 1.0f, 0.0f, 0.0f,
+		 0.05f, -0.05f, 1.0f, 0.0f, 0.0f,
+		 0.05f,  0.05f, 1.0f, 0.0f, 0.0f,
+		-0.05f,  0.05f, 1.0f, 0.0f, 0.0f
+	} };
+
+	type = meshTypes::SQUARE;
+	meshes->consume(type, vertices);
+
+	vertices = { {
+		-0.05f, -0.025f, 0.0f, 0.0f, 1.0f,
+		-0.02f, -0.025f, 0.0f, 0.0f, 1.0f,
+		-0.03f,    0.0f, 0.0f, 0.0f, 1.0f,
+		-0.02f, -0.025f, 0.0f, 0.0f, 1.0f,
+		  0.0f,  -0.05f, 0.0f, 0.0f, 1.0f,
+		 0.02f, -0.025f, 0.0f, 0.0f, 1.0f,
+		-0.03f,    0.0f, 0.0f, 0.0f, 1.0f,
+		-0.02f, -0.025f, 0.0f, 0.0f, 1.0f,
+		 0.02f, -0.025f, 0.0f, 0.0f, 1.0f,
+		 0.02f, -0.025f, 0.0f, 0.0f, 1.0f,
+		 0.05f, -0.025f, 0.0f, 0.0f, 1.0f,
+		 0.03f,    0.0f, 0.0f, 0.0f, 1.0f,
+		-0.03f,    0.0f, 0.0f, 0.0f, 1.0f,
+		 0.02f, -0.025f, 0.0f, 0.0f, 1.0f,
+		 0.03f,    0.0f, 0.0f, 0.0f, 1.0f,
+		 0.03f,    0.0f, 0.0f, 0.0f, 1.0f,
+		 0.04f,   0.05f, 0.0f, 0.0f, 1.0f,
+		  0.0f,   0.01f, 0.0f, 0.0f, 1.0f,
+		-0.03f,    0.0f, 0.0f, 0.0f, 1.0f,
+		 0.03f,    0.0f, 0.0f, 0.0f, 1.0f,
+		  0.0f,   0.01f, 0.0f, 0.0f, 1.0f,
+		-0.03f,    0.0f, 0.0f, 0.0f, 1.0f,
+		  0.0f,   0.01f, 0.0f, 0.0f, 1.0f,
+		-0.04f,   0.05f, 0.0f, 0.0f, 1.0f
+	} };
+
+	type = meshTypes::STAR;
+	meshes->consume(type, vertices);
+
+	meshes->finalize(device, physicalDevice);
 }
 
 void Engine::prepare_scene(vk::CommandBuffer commandBuffer) {
-	vk::Buffer vertexBuffers[] = { triangleMesh->vertexBuffer.buffer };
+	vk::Buffer vertexBuffers[] = { meshes->vertexBuffer.buffer };
 	vk::DeviceSize offsets[] = { 0 };
 	commandBuffer.bindVertexBuffers(0, 1, vertexBuffers, offsets);
 }
@@ -186,16 +239,55 @@ void Engine::record_draw_commands(vk::CommandBuffer commandBuffer,Scene* scene, 
 	commandBuffer.beginRenderPass(&renderPassInfo, vk::SubpassContents::eInline);
 
 	commandBuffer.bindPipeline(vk::PipelineBindPoint::eGraphics, pipeline);
+
 	prepare_scene(commandBuffer);
-	for (auto position : scene->trianglePositions) {
-		glm::mat4 model = glm::translate(glm::mat4(1.0), position);
-		vkUtil::ObjectData objData;
-		objData.model = model;
+	int firstVertex = meshes->offsets.find(meshTypes::TRIANGLE)->second;
+	int vertexCount = meshes->sizes.find(meshTypes::TRIANGLE)->second;
+	for (glm::vec3 position : scene->trianglePositions) {
+
+		glm::mat4 model = glm::translate(glm::mat4(1.0f), position);
+		vkUtil::ObjectData objectData;
+		objectData.model = model;
 		commandBuffer.pushConstants(
-			pipelineLayout, vk::ShaderStageFlagBits::eVertex, 0,sizeof(objData), & objData);
-		commandBuffer.draw(3, 1, 0, 0);
+			pipelineLayout, vk::ShaderStageFlagBits::eVertex,
+			0, sizeof(objectData), &objectData
+		);
+
+		commandBuffer.draw(vertexCount, 1, firstVertex, 0);
+
 	}
 
+	vertexCount = meshes->sizes.find(meshTypes::SQUARE)->second;
+	firstVertex = meshes->offsets.find(meshTypes::SQUARE)->second;
+	for (glm::vec3 position : scene->squarePositions) {
+
+		glm::mat4 model = glm::translate(glm::mat4(1.0f), position);
+		vkUtil::ObjectData objectData;
+		objectData.model = model;
+		commandBuffer.pushConstants(
+			pipelineLayout, vk::ShaderStageFlagBits::eVertex,
+			0, sizeof(objectData), &objectData
+		);
+
+		commandBuffer.draw(vertexCount, 1, firstVertex, 0);
+
+	}
+
+	vertexCount = meshes->sizes.find(meshTypes::STAR)->second;
+	firstVertex = meshes->offsets.find(meshTypes::STAR)->second;
+	for (glm::vec3 position : scene->starPositions) {
+
+		glm::mat4 model = glm::translate(glm::mat4(1.0f), position);
+		vkUtil::ObjectData objectData;
+		objectData.model = model;
+		commandBuffer.pushConstants(
+			pipelineLayout, vk::ShaderStageFlagBits::eVertex,
+			0, sizeof(objectData), &objectData
+		);
+
+		commandBuffer.draw(vertexCount, 1, firstVertex, 0);
+
+	}
 
 	commandBuffer.endRenderPass();
 

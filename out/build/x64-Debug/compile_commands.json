@@ -13,26 +13,44 @@
 },
 {
   "directory": "C:/Users/ADMIN/graphics-projects/learning-vulkan/out/build/x64-Debug",
-  "command": "C:\\PROGRA~1\\MIB055~1\\18\\Insiders\\VC\\Tools\\MSVC\\1451~1.362\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -IC:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\libs\\glm -IC:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\libs\\glfw\\include -external:IC:\\VulkanSDK\\1.4.341.1\\include -external:W0 /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17 /FoCMakeFiles\\learning-vulkan.dir\\src\\logging.cpp.obj /FdCMakeFiles\\learning-vulkan.dir\\ /FS -c C:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\src\\logging.cpp",
-  "file": "C:/Users/ADMIN/graphics-projects/learning-vulkan/src/logging.cpp",
-  "output": "C:/Users/ADMIN/graphics-projects/learning-vulkan/out/build/x64-Debug/CMakeFiles/learning-vulkan.dir/src/logging.cpp.obj"
+  "command": "C:\\PROGRA~1\\MIB055~1\\18\\Insiders\\VC\\Tools\\MSVC\\1451~1.362\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -IC:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\libs\\glm -IC:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\libs\\glfw\\include -external:IC:\\VulkanSDK\\1.4.341.1\\include -external:W0 /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17 /FoCMakeFiles\\learning-vulkan.dir\\src\\control\\logging.cpp.obj /FdCMakeFiles\\learning-vulkan.dir\\ /FS -c C:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\src\\control\\logging.cpp",
+  "file": "C:/Users/ADMIN/graphics-projects/learning-vulkan/src/control/logging.cpp",
+  "output": "C:/Users/ADMIN/graphics-projects/learning-vulkan/out/build/x64-Debug/CMakeFiles/learning-vulkan.dir/src/control/logging.cpp.obj"
 },
 {
   "directory": "C:/Users/ADMIN/graphics-projects/learning-vulkan/out/build/x64-Debug",
-  "command": "C:\\PROGRA~1\\MIB055~1\\18\\Insiders\\VC\\Tools\\MSVC\\1451~1.362\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -IC:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\libs\\glm -IC:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\libs\\glfw\\include -external:IC:\\VulkanSDK\\1.4.341.1\\include -external:W0 /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17 /FoCMakeFiles\\learning-vulkan.dir\\src\\core\\scene.cpp.obj /FdCMakeFiles\\learning-vulkan.dir\\ /FS -c C:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\src\\core\\scene.cpp",
-  "file": "C:/Users/ADMIN/graphics-projects/learning-vulkan/src/core/scene.cpp",
-  "output": "C:/Users/ADMIN/graphics-projects/learning-vulkan/out/build/x64-Debug/CMakeFiles/learning-vulkan.dir/src/core/scene.cpp.obj"
+  "command": "C:\\PROGRA~1\\MIB055~1\\18\\Insiders\\VC\\Tools\\MSVC\\1451~1.362\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -IC:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\libs\\glm -IC:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\libs\\glfw\\include -external:IC:\\VulkanSDK\\1.4.341.1\\include -external:W0 /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17 /FoCMakeFiles\\learning-vulkan.dir\\src\\model\\scene.cpp.obj /FdCMakeFiles\\learning-vulkan.dir\\ /FS -c C:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\src\\model\\scene.cpp",
+  "file": "C:/Users/ADMIN/graphics-projects/learning-vulkan/src/model/scene.cpp",
+  "output": "C:/Users/ADMIN/graphics-projects/learning-vulkan/out/build/x64-Debug/CMakeFiles/learning-vulkan.dir/src/model/scene.cpp.obj"
 },
 {
   "directory": "C:/Users/ADMIN/graphics-projects/learning-vulkan/out/build/x64-Debug",
-  "command": "C:\\PROGRA~1\\MIB055~1\\18\\Insiders\\VC\\Tools\\MSVC\\1451~1.362\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -IC:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\libs\\glm -IC:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\libs\\glfw\\include -external:IC:\\VulkanSDK\\1.4.341.1\\include -external:W0 /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17 /FoCMakeFiles\\learning-vulkan.dir\\src\\app.cpp.obj /FdCMakeFiles\\learning-vulkan.dir\\ /FS -c C:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\src\\app.cpp",
-  "file": "C:/Users/ADMIN/graphics-projects/learning-vulkan/src/app.cpp",
-  "output": "C:/Users/ADMIN/graphics-projects/learning-vulkan/out/build/x64-Debug/CMakeFiles/learning-vulkan.dir/src/app.cpp.obj"
+  "command": "C:\\PROGRA~1\\MIB055~1\\18\\Insiders\\VC\\Tools\\MSVC\\1451~1.362\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -IC:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\libs\\glm -IC:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\libs\\glfw\\include -external:IC:\\VulkanSDK\\1.4.341.1\\include -external:W0 /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17 /FoCMakeFiles\\learning-vulkan.dir\\src\\control\\app.cpp.obj /FdCMakeFiles\\learning-vulkan.dir\\ /FS -c C:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\src\\control\\app.cpp",
+  "file": "C:/Users/ADMIN/graphics-projects/learning-vulkan/src/control/app.cpp",
+  "output": "C:/Users/ADMIN/graphics-projects/learning-vulkan/out/build/x64-Debug/CMakeFiles/learning-vulkan.dir/src/control/app.cpp.obj"
 },
 {
   "directory": "C:/Users/ADMIN/graphics-projects/learning-vulkan/out/build/x64-Debug",
-  "command": "C:\\PROGRA~1\\MIB055~1\\18\\Insiders\\VC\\Tools\\MSVC\\1451~1.362\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -IC:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\libs\\glm -IC:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\libs\\glfw\\include -external:IC:\\VulkanSDK\\1.4.341.1\\include -external:W0 /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17 /FoCMakeFiles\\learning-vulkan.dir\\src\\core\\triangle_mesh.cpp.obj /FdCMakeFiles\\learning-vulkan.dir\\ /FS -c C:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\src\\core\\triangle_mesh.cpp",
-  "file": "C:/Users/ADMIN/graphics-projects/learning-vulkan/src/core/triangle_mesh.cpp",
-  "output": "C:/Users/ADMIN/graphics-projects/learning-vulkan/out/build/x64-Debug/CMakeFiles/learning-vulkan.dir/src/core/triangle_mesh.cpp.obj"
+  "command": "C:\\PROGRA~1\\MIB055~1\\18\\Insiders\\VC\\Tools\\MSVC\\1451~1.362\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -IC:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\libs\\glm -IC:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\libs\\glfw\\include -external:IC:\\VulkanSDK\\1.4.341.1\\include -external:W0 /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17 /FoCMakeFiles\\learning-vulkan.dir\\src\\model\\triangle_mesh.cpp.obj /FdCMakeFiles\\learning-vulkan.dir\\ /FS -c C:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\src\\model\\triangle_mesh.cpp",
+  "file": "C:/Users/ADMIN/graphics-projects/learning-vulkan/src/model/triangle_mesh.cpp",
+  "output": "C:/Users/ADMIN/graphics-projects/learning-vulkan/out/build/x64-Debug/CMakeFiles/learning-vulkan.dir/src/model/triangle_mesh.cpp.obj"
+},
+{
+  "directory": "C:/Users/ADMIN/graphics-projects/learning-vulkan/out/build/x64-Debug",
+  "command": "C:\\PROGRA~1\\MIB055~1\\18\\Insiders\\VC\\Tools\\MSVC\\1451~1.362\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -IC:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\libs\\glm -IC:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\libs\\glfw\\include -external:IC:\\VulkanSDK\\1.4.341.1\\include -external:W0 /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17 /FoCMakeFiles\\learning-vulkan.dir\\src\\model\\square_mesh.cpp.obj /FdCMakeFiles\\learning-vulkan.dir\\ /FS -c C:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\src\\model\\square_mesh.cpp",
+  "file": "C:/Users/ADMIN/graphics-projects/learning-vulkan/src/model/square_mesh.cpp",
+  "output": "C:/Users/ADMIN/graphics-projects/learning-vulkan/out/build/x64-Debug/CMakeFiles/learning-vulkan.dir/src/model/square_mesh.cpp.obj"
+},
+{
+  "directory": "C:/Users/ADMIN/graphics-projects/learning-vulkan/out/build/x64-Debug",
+  "command": "C:\\PROGRA~1\\MIB055~1\\18\\Insiders\\VC\\Tools\\MSVC\\1451~1.362\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -IC:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\libs\\glm -IC:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\libs\\glfw\\include -external:IC:\\VulkanSDK\\1.4.341.1\\include -external:W0 /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17 /FoCMakeFiles\\learning-vulkan.dir\\src\\model\\star_mesh.cpp.obj /FdCMakeFiles\\learning-vulkan.dir\\ /FS -c C:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\src\\model\\star_mesh.cpp",
+  "file": "C:/Users/ADMIN/graphics-projects/learning-vulkan/src/model/star_mesh.cpp",
+  "output": "C:/Users/ADMIN/graphics-projects/learning-vulkan/out/build/x64-Debug/CMakeFiles/learning-vulkan.dir/src/model/star_mesh.cpp.obj"
+},
+{
+  "directory": "C:/Users/ADMIN/graphics-projects/learning-vulkan/out/build/x64-Debug",
+  "command": "C:\\PROGRA~1\\MIB055~1\\18\\Insiders\\VC\\Tools\\MSVC\\1451~1.362\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -IC:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\libs\\glm -IC:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\libs\\glfw\\include -external:IC:\\VulkanSDK\\1.4.341.1\\include -external:W0 /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17 /FoCMakeFiles\\learning-vulkan.dir\\src\\model\\vertex_menagerie.cpp.obj /FdCMakeFiles\\learning-vulkan.dir\\ /FS -c C:\\Users\\ADMIN\\graphics-projects\\learning-vulkan\\src\\model\\vertex_menagerie.cpp",
+  "file": "C:/Users/ADMIN/graphics-projects/learning-vulkan/src/model/vertex_menagerie.cpp",
+  "output": "C:/Users/ADMIN/graphics-projects/learning-vulkan/out/build/x64-Debug/CMakeFiles/learning-vulkan.dir/src/model/vertex_menagerie.cpp.obj"
 }
 ]
